@@ -3,12 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@jobandtalent/design-system": "^2.1.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
+    "react-day-picker": "^7.4.10",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "react-select": "1.2.1",
+    "react-select-v4": "npm:react-select@^4.1.0",
+    "react-table": "^7.6.3",
+    "react-transition-group": "^4.4.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -21,7 +28,11 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "plugins": ["prettier"],
+    "rules": {
+      "prettier/prettier": "error"
+    }
   },
   "browserslist": {
     "production": [
@@ -34,5 +45,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1"
   }
 }
