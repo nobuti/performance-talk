@@ -6,6 +6,7 @@ import reportWebVitals from "report/reportWebVitals";
 import App from "App";
 
 import "@jobandtalent/design-system/dist/styles.css";
+import "./reset.css";
 
 ReactDOM.render(
   <React.StrictMode>

@@ -7,6 +7,8 @@ const Component = ({ children }) => (
   <div className={styles.container}>{children}</div>
 );
 
+Component.displayName = "Container";
+
 Component.propTypes = {
   children: PropTypes.node,
 };
