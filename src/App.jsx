@@ -62,7 +62,7 @@ function App() {
 
   return (
     <Container>
-      <MainHeader title="React.memo">
+      <MainHeader title="React DevTools Profiler">
         <Button onSelect={getUsers} tiny>
           Refresh
         </Button>
