@@ -1,73 +1,67 @@
-import React, { useEffect, useState } from "react";
-import { Button, MainHeader } from "@jobandtalent/design-system";
-import { createServer } from "miragejs";
+import React from "react";
 
 import Container from "components/Container";
+import Header from "components/Header";
+import List from "components/List/List";
+import Details from "components/Details";
+import Map from "components/Map";
 
-import styles from "styles.module.css";
+import { useFetchVolcanos, useVolcanos } from "hooks";
 
-const Users = ({ users }) => {
-  return (
-    <div className={styles.table}>
-      {users.map((u) => {
-        return (
-          <div key={u.email} className={styles.row}>
-            <div className={styles.cell}>{u.name}</div>
-            <div className={styles.cell}>{u.email}</div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+import {
+  getCountries,
+  filterVolcanos,
+  getSelectedVolcano,
+  getMapData,
+} from "utils/utils";
 
-const payload = [
-  {
-    name: "Mortadelo",
-    email: "mortadelo@jobandtalent.com",
-  },
-  {
-    name: "Filemón",
-    email: "filemon@jobandtalent.com",
-  },
-  {
-    name: "Súper",
-    email: "super@jobandtalent.com",
-  },
-  {
-    name: "Ofelia",
-    email: "ofelia@jobandtalent.com",
-  },
-];
+import styles from "./styles.module.css";
+
+const getValue = (c) => (c != null ? c.value : null);
 
 function App() {
-  const [users, setUsers] = useState(payload);
+  const [volcanos] = useFetchVolcanos([]);
 
-  useEffect(() => {
-    const server = createServer({
-      routes() {
-        this.get("/users", () => payload);
-      },
-    });
+  const {
+    country,
+    search,
+    volcano,
+    countryHandler,
+    searchHandler,
+    volcanoHandler,
+  } = useVolcanos();
 
-    return () => {
-      server.shutdown();
-    };
-  }, []);
+  const countries = getCountries(volcanos);
 
-  const getUsers = () =>
-    fetch("/users")
-      .then((response) => response.json())
-      .then(setUsers);
+  const filteredVolcanos = filterVolcanos({
+    volcanos,
+    country: getValue(country),
+    search,
+  });
+
+  const data = getMapData(filteredVolcanos);
 
   return (
     <Container>
-      <MainHeader title="React DevTools Profiler">
-        <Button onSelect={getUsers} tiny>
-          Refresh
-        </Button>
-      </MainHeader>
-      <Users users={users} />
+      <Header
+        countries={countries}
+        country={country}
+        search={search}
+        searchHandler={searchHandler}
+        countryHandler={countryHandler}
+      />
+
+      <div className={styles.volcanos}>
+        <List
+          selected={volcano}
+          volcanos={filteredVolcanos}
+          volcanoHandler={volcanoHandler}
+        />
+
+        {volcano && <Details {...getSelectedVolcano({ volcanos, volcano })} />}
+      </div>
+
+      {data != null && <Map data={data} />}
     </Container>
   );
 }

@@ -1,0 +1,35 @@
+.list {
+  padding: 0;
+  max-height: 48vh;
+  overflow-y: scroll;
+  background: #fff;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  width: 100%;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  justify-content: space-between;
+  background: #f7fafc;
+  border-bottom: 1px #e4e9ec solid;
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.item:hover,
+.item.active {
+  background: #f2f7fa;
+}
+
+.header {
+  height: 60px;
+  padding: 0 20px;
+  align-items: center;
+  display: flex;
+  border-bottom: 1px #e4e9ec solid;
+  justify-content: space-between;
+  color: #989898;
+}

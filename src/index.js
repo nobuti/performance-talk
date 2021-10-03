@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import App from "App";
 
 import "@jobandtalent/design-system/dist/styles.css";
+import "leaflet/dist/leaflet.css";
 import "./reset.css";
 
 ReactDOM.render(

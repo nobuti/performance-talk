@@ -1,14 +1,6 @@
-.table {
-  display: block;
-  margin-top: 20px;
-}
-
-.row {
+.volcanos {
   display: flex;
-  padding: 0 20px;
-}
-
-.cell {
-  padding: 10px;
-  flex: 1;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 20px;
 }
