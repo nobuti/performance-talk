@@ -52,11 +52,7 @@ function App() {
       />
 
       <div className={styles.volcanos}>
-        <List
-          selected={volcano}
-          volcanos={filteredVolcanos}
-          volcanoHandler={volcanoHandler}
-        />
+        <List volcanos={filteredVolcanos} volcanoHandler={volcanoHandler} />
 
         {volcano && <Details {...getSelectedVolcano({ volcanos, volcano })} />}
       </div>

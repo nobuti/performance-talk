@@ -1,13 +1,10 @@
 import React from "react";
-import cx from "classnames";
 import styles from "./styles.module.css";
 
 const noop = () => {};
-const ListItem = ({ selected, Country, Name, id, onClick = noop }) => (
-  <div
-    className={cx(styles.item, { [styles.active]: selected === id })}
-    onClick={() => onClick(selected === id ? null : id)}
-  >
+
+const ListItem = ({ Country, Name, id, onClick = noop }) => (
+  <div className={styles.item} onClick={() => onClick(id)}>
     <div>{Name}</div>
     <div>{Country}</div>
   </div>
