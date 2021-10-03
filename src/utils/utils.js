@@ -40,7 +40,7 @@ export const filterVolcanos = ({
 
   if (search) {
     filteredVolcanos = filteredVolcanos.filter((p) =>
-      p.name.toLowerCase().includes(search)
+      p.Name.toLowerCase().includes(search)
     );
   }
 
