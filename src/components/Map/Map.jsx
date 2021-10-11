@@ -1,7 +1,31 @@
 import React from "react";
-import { Map, CircleMarker, TileLayer, Tooltip } from "react-leaflet";
+import {
+  MapContainer,
+  CircleMarker,
+  TileLayer,
+  Tooltip,
+  useMap,
+} from "react-leaflet";
+import { latLngBounds } from "leaflet";
+
+function ChangeView({ center, bounds }) {
+  const map = useMap();
+  const [lng, lat] = center;
+  map.setView({ lng, lat }, 12);
+
+  let markerBounds = latLngBounds([]);
+  bounds.forEach((marker) => {
+    markerBounds.extend(marker);
+  });
+  map.fitBounds(markerBounds);
+  return null;
+}
 
 const Component = ({ data }) => {
+  if (data == null) {
+    return null;
+  }
+
   const centerLat = (data.minLat + data.maxLat) / 2;
   const distanceLat = data.maxLat - data.minLat;
   const bufferLat = distanceLat * 0.05;
@@ -10,8 +34,8 @@ const Component = ({ data }) => {
   const bufferLon = distanceLon * 0.05;
 
   return (
-    <Map
-      style={{ height: "480px", width: "100%" }}
+    <MapContainer
+      style={{ height: "100%", width: "100%" }}
       center={[centerLat, centerLong]}
       bounds={[
         [data.minLat - bufferLat, data.minLon - bufferLon],
@@ -21,6 +45,14 @@ const Component = ({ data }) => {
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+
+      <ChangeView
+        center={[centerLat, centerLong]}
+        bounds={data.volcanos.map((volcano) => [
+          volcano.Latitude,
+          volcano.Longitude,
+        ])}
       />
 
       {data.volcanos.map((volcano, k) => {
@@ -39,7 +71,7 @@ const Component = ({ data }) => {
           </CircleMarker>
         );
       })}
-    </Map>
+    </MapContainer>
   );
 };
 

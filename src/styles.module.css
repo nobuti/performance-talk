@@ -4,3 +4,12 @@
   width: 100%;
   margin-bottom: 20px;
 }
+
+.column {
+  flex: 1 1 50%;
+  height: 100vh;
+}
+
+.content {
+  padding: 0 20px;
+}

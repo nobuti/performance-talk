@@ -43,21 +43,28 @@ function App() {
 
   return (
     <Container>
-      <Header
-        countries={countries}
-        country={country}
-        search={search}
-        searchHandler={searchHandler}
-        countryHandler={countryHandler}
-      />
-
-      <div className={styles.volcanos}>
-        <List volcanos={filteredVolcanos} volcanoHandler={volcanoHandler} />
-
-        {volcano && <Details {...getSelectedVolcano({ volcanos, volcano })} />}
+      <div className={styles.column}>
+        <Map data={data} />
       </div>
+      <div className={styles.column}>
+        <div className={styles.content}>
+          <Header
+            countries={countries}
+            country={country}
+            search={search}
+            searchHandler={searchHandler}
+            countryHandler={countryHandler}
+          />
 
-      {data != null && <Map data={data} />}
+          <div className={styles.volcanos}>
+            <List volcanos={filteredVolcanos} volcanoHandler={volcanoHandler} />
+
+            {volcano && (
+              <Details {...getSelectedVolcano({ volcanos, volcano })} />
+            )}
+          </div>
+        </div>
+      </div>
     </Container>
   );
 }
