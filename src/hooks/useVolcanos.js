@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 
 const ACTIONS = {
-  country: "COUNTRY",
+  year: "YEAR",
   search: "SEARCH",
   volcano: "VOLCANO",
 };
@@ -10,8 +10,8 @@ const volcanoReducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case ACTIONS.country: {
-      return { ...state, country: payload.country };
+    case ACTIONS.year: {
+      return { ...state, year: payload.year, volcano: null };
     }
     case ACTIONS.search: {
       return { ...state, search: payload.search };
@@ -26,8 +26,8 @@ const volcanoReducer = (state, action) => {
 };
 
 const useVolcanos = () => {
-  const [{ country, search, volcano }, dispatch] = useReducer(volcanoReducer, {
-    country: null,
+  const [{ year, search, volcano }, dispatch] = useReducer(volcanoReducer, {
+    year: null,
     volcano: null,
     search: "",
   });
@@ -35,18 +35,18 @@ const useVolcanos = () => {
   const searchHandler = (search) =>
     dispatch({ type: ACTIONS.search, payload: { search } });
 
-  const countryHandler = (country) =>
-    dispatch({ type: ACTIONS.country, payload: { country } });
+  const yearHandler = (year) =>
+    dispatch({ type: ACTIONS.year, payload: { year } });
 
   const volcanoHandler = (volcano) =>
     dispatch({ type: ACTIONS.volcano, payload: { volcano } });
 
   return {
-    country,
+    year,
     search,
     volcano,
     searchHandler,
-    countryHandler,
+    yearHandler,
     volcanoHandler,
   };
 };

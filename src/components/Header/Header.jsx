@@ -3,13 +3,7 @@ import { InputText, InputSelect } from "@jobandtalent/design-system";
 
 import styles from "./styles.module.css";
 
-const Component = ({
-  countries,
-  country,
-  search,
-  searchHandler,
-  countryHandler,
-}) => (
+const Component = ({ years, year, search, searchHandler, yearHandler }) => (
   <div className={styles.header}>
     <InputText
       className={styles.search}
@@ -20,12 +14,12 @@ const Component = ({
     <img alt="Volcano!" src="/volcano.svg" className={styles.logo} />
     <InputSelect
       className={styles.select}
-      placeholder="Country"
-      onChange={countryHandler}
-      value={country}
-      options={countries.map((c) => ({
-        label: c.name,
-        value: c.name,
+      placeholder="Year"
+      onChange={yearHandler}
+      value={year}
+      options={years.map((c) => ({
+        label: c.year,
+        value: c.year,
       }))}
       isClearable
     />

@@ -1,12 +1,53 @@
 import { compact, uniq, minBy, maxBy } from "lodash";
 
-export const getCountries = (volcanos) => {
-  const uniqueCountries = compact(uniq(volcanos.map((p) => p.Country)).sort());
+export const getYears = (volcanos) => {
+  const uniqueYears = compact(uniq(volcanos.map((p) => p.year)).sort());
 
-  return uniqueCountries.map((country) => ({
-    name: country,
-    count: volcanos.filter((p) => p.Country === country).length,
-  }));
+  return uniqueYears
+    .map((year) => ({
+      year,
+      count: volcanos.filter((p) => p.year === year).length,
+    }))
+    .sort((a, b) => b.year - a.year);
+};
+
+export const getMetrics = (volcanos) => {
+  const uniqueCountries = compact(uniq(volcanos.map((p) => p.country)));
+  const result = volcanos.reduce(
+    (memo, v) => {
+      const { type, status } = v;
+      if (memo.status[status] == null) {
+        memo.status[status] = 1;
+      } else {
+        memo.status[status] = memo.status[status] + 1;
+      }
+
+      if (memo.types[type] == null) {
+        memo.types[type] = 1;
+      } else {
+        memo.types[type] = memo.types[type] + 1;
+      }
+
+      return {
+        ...memo,
+        deaths: memo.deaths + v.deaths,
+        tsunamis: memo.tsunamis + v.tsunami,
+        earthquakes: memo.earthquakes + v.earthquake,
+      };
+    },
+    {
+      deaths: 0,
+      tsunamis: 0,
+      earthquakes: 0,
+      types: {},
+      status: {},
+    }
+  );
+
+  return {
+    ...result,
+    countries: uniqueCountries.length,
+  };
 };
 
 export const getSelectedVolcano = ({ volcano, volcanos }) =>
@@ -31,21 +72,17 @@ export const getMapData = (volcanos) => {
   };
 };
 
-export const filterVolcanos = ({
-  volcanos = [],
-  search = "",
-  country = null,
-}) => {
+export const filterVolcanos = ({ volcanos = [], search = "", year = null }) => {
   let filteredVolcanos = [...volcanos];
 
   if (search) {
     filteredVolcanos = filteredVolcanos.filter((p) =>
-      p.Name.toLowerCase().includes(search)
+      p.name.toLowerCase().includes(search)
     );
   }
 
-  if (country) {
-    filteredVolcanos = filteredVolcanos.filter((p) => p.Country === country);
+  if (year) {
+    filteredVolcanos = filteredVolcanos.filter((p) => p.year === year);
   }
   return filteredVolcanos;
 };

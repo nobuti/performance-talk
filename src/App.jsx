@@ -4,15 +4,16 @@ import Container from "components/Container";
 import Header from "components/Header";
 import List from "components/List/List";
 import Details from "components/Details";
-import Map from "components/Map";
+import Dashboard from "components/Dashboard";
 
 import { useFetchVolcanos, useVolcanos } from "hooks";
 
 import {
-  getCountries,
+  getYears,
   filterVolcanos,
   getSelectedVolcano,
-  getMapData,
+  getMetrics,
+  // getMapData,
 } from "utils/utils";
 
 import styles from "./styles.module.css";
@@ -22,48 +23,51 @@ const getValue = (c) => (c != null ? c.value : null);
 function App() {
   const [volcanos] = useFetchVolcanos([]);
 
-  const {
-    country,
-    search,
-    volcano,
-    countryHandler,
-    searchHandler,
-    volcanoHandler,
-  } = useVolcanos();
+  const { year, search, volcano, yearHandler, searchHandler, volcanoHandler } =
+    useVolcanos();
 
-  const countries = getCountries(volcanos);
+  const years = getYears(volcanos);
 
   const filteredVolcanos = filterVolcanos({
     volcanos,
-    country: getValue(country),
+    year: getValue(year),
     search,
   });
 
-  const data = getMapData(filteredVolcanos);
+  const metrics = getMetrics(filteredVolcanos);
+  console.log(metrics);
 
   return (
     <Container>
-      <div className={styles.column}>
-        <Map data={data} />
+      <div className={styles.left}>
+        <Dashboard
+          metrics={metrics}
+          keys={["deaths", "tsunamis", "earthquakes", "countries"]}
+        />
+        <Dashboard metrics={metrics.types} keys={Object.keys(metrics.types)} />
+        <Dashboard
+          metrics={metrics.status}
+          keys={Object.keys(metrics.status)}
+        />
       </div>
-      <div className={styles.column}>
+      <div className={styles.center}>
         <div className={styles.content}>
           <Header
-            countries={countries}
-            country={country}
+            years={years}
+            year={year}
             search={search}
             searchHandler={searchHandler}
-            countryHandler={countryHandler}
+            yearHandler={yearHandler}
           />
 
           <div className={styles.volcanos}>
             <List volcanos={filteredVolcanos} volcanoHandler={volcanoHandler} />
-
-            {volcano && (
-              <Details {...getSelectedVolcano({ volcanos, volcano })} />
-            )}
           </div>
         </div>
+      </div>
+
+      <div className={styles.right}>
+        {volcano && <Details {...getSelectedVolcano({ volcanos, volcano })} />}
       </div>
     </Container>
   );

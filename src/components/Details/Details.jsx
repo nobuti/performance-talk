@@ -2,14 +2,17 @@ import React from "react";
 
 import styles from "./styles.module.css";
 
+const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
 const TITLES = [
-  "Name",
-  "Country",
-  "Region",
-  "Subregion",
-  "Latitude",
-  "Longitude",
-  "class",
+  "name",
+  "elevation",
+  "country",
+  "type",
+  "status",
+  "year",
+  "tsunami",
+  "earthquake",
 ];
 
 const Details = (volcano) => (
@@ -18,7 +21,7 @@ const Details = (volcano) => (
       {TITLES.map((t) => {
         return (
           <div className={styles.row} key={`detail-${t}`}>
-            <div className={styles.key}>{t}</div>
+            <div className={styles.key}>{capitalize(t)}</div>
             <div className={styles.content}>{volcano[t]}</div>
           </div>
         );

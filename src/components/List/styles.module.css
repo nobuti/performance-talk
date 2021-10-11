@@ -1,6 +1,6 @@
 .list {
   padding: 0;
-  max-height: 100vh;
+  max-height: 100%;
   overflow-y: scroll;
   background: #fff;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
@@ -24,6 +24,14 @@
   background: #f2f7fa;
 }
 
+.item div {
+  flex: 1;
+}
+
+.icon {
+  width: 32px;
+}
+
 .header {
   height: 60px;
   padding: 0 20px;
@@ -32,4 +40,16 @@
   border-bottom: 1px #e4e9ec solid;
   justify-content: space-between;
   color: #989898;
+}
+
+.left {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
 }
