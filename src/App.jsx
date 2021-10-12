@@ -13,7 +13,6 @@ import {
   filterVolcanos,
   getSelectedVolcano,
   getMetrics,
-  // getMapData,
 } from "utils/utils";
 
 import styles from "./styles.module.css";
