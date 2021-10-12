@@ -75,14 +75,15 @@ export const getMapData = (volcanos) => {
 export const filterVolcanos = ({ volcanos = [], search = "", year = null }) => {
   let filteredVolcanos = [...volcanos];
 
-  if (search) {
-    filteredVolcanos = filteredVolcanos.filter((p) =>
-      p.name.toLowerCase().includes(search)
-    );
-  }
-
   if (year) {
     filteredVolcanos = filteredVolcanos.filter((p) => p.year === year);
   }
+
+  if (search) {
+    filteredVolcanos = filteredVolcanos
+      .filter((p) => p.name.toLowerCase().includes(search))
+      .slice(0, 20);
+  }
+
   return filteredVolcanos;
 };
