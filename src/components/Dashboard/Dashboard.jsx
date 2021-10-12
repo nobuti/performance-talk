@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 
 import Stat from "components/Dashboard/Stat";
 
 import styles from "./styles.module.css";
 
-const Component = ({ metrics, keys }) => {
+const Component = memo(({ metrics, keys }) => {
   return (
     <div className={styles.container}>
       {keys.map((key) => (
@@ -12,6 +12,6 @@ const Component = ({ metrics, keys }) => {
       ))}
     </div>
   );
-};
+});
 
 export default Component;

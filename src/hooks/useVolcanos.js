@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useCallback } from "react";
 
 const ACTIONS = {
   year: "YEAR",
@@ -32,14 +32,24 @@ const useVolcanos = () => {
     search: "",
   });
 
-  const searchHandler = (search) =>
-    dispatch({ type: ACTIONS.search, payload: { search } });
+  const searchHandler = useCallback(
+    (search) =>
+      dispatch({
+        type: ACTIONS.search,
+        payload: { search: search.target.value },
+      }),
+    []
+  );
 
-  const yearHandler = (year) =>
-    dispatch({ type: ACTIONS.year, payload: { year } });
+  const yearHandler = useCallback(
+    (year) => dispatch({ type: ACTIONS.year, payload: { year } }),
+    []
+  );
 
-  const volcanoHandler = (volcano) =>
-    dispatch({ type: ACTIONS.volcano, payload: { volcano } });
+  const volcanoHandler = useCallback(
+    (volcano) => dispatch({ type: ACTIONS.volcano, payload: { volcano } }),
+    []
+  );
 
   return {
     year,

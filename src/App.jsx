@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import Container from "components/Container";
 import Header from "components/Header";
@@ -26,29 +26,36 @@ function App() {
   const { year, search, volcano, yearHandler, searchHandler, volcanoHandler } =
     useVolcanos();
 
-  const years = getYears(volcanos);
+  const years = useMemo(() => getYears(volcanos), [volcanos]);
 
-  const filteredVolcanos = filterVolcanos({
-    volcanos,
-    year: getValue(year),
-    search,
-  });
+  const filteredVolcanos = useMemo(
+    () =>
+      filterVolcanos({
+        volcanos,
+        year: getValue(year),
+        search,
+      }),
+    [volcanos, search, year]
+  );
 
-  const metrics = getMetrics(filteredVolcanos);
-  console.log(metrics);
+  const metrics = useMemo(
+    () => getMetrics(filteredVolcanos),
+    [filteredVolcanos]
+  );
+
+  const mainKeys = useMemo(
+    () => ["deaths", "tsunamis", "earthquakes", "countries"],
+    []
+  );
+  const statusKeys = useMemo(() => Object.keys(metrics.status), [metrics]);
+  const typesKeys = useMemo(() => Object.keys(metrics.types), [metrics]);
 
   return (
     <Container>
       <div className={styles.left}>
-        <Dashboard
-          metrics={metrics}
-          keys={["deaths", "tsunamis", "earthquakes", "countries"]}
-        />
-        <Dashboard metrics={metrics.types} keys={Object.keys(metrics.types)} />
-        <Dashboard
-          metrics={metrics.status}
-          keys={Object.keys(metrics.status)}
-        />
+        <Dashboard metrics={metrics} keys={mainKeys} />
+        <Dashboard metrics={metrics.types} keys={typesKeys} />
+        <Dashboard metrics={metrics.status} keys={statusKeys} />
       </div>
       <div className={styles.center}>
         <div className={styles.content}>
